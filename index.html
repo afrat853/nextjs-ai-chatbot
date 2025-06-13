@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <title>মেকানিক ভাই</title>
+  <style>
+    body { font-family: sans-serif; background: #f9f9f9; padding: 20px; }
+    .chatbox { max-width: 600px; margin: auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px #ccc; }
+    .message { margin: 10px 0; }
+    .user { text-align: right; color: blue; }
+    .bot { text-align: left; color: green; }
+    input, button { padding: 10px; margin-top: 10px; width: 100%; }
+  </style>
+</head>
+<body>
+  <div class="chatbox">
+    <h2>🛠️ মেকানিক ভাই চ্যাটবট</h2>
+    <div id="messages"></div>
+    <input type="text" id="userInput" placeholder="আপনার বাইকের সমস্যা লিখুন..." />
+    <button onclick="sendMessage()">পাঠান</button>
+  </div>
+  <script>
+    const replies = {
+      'স্টার্ট নিচ্ছে না': 'সম্ভবত ব্যাটারির কানেকশন বা চার্জ সমস্যা।',
+      'ধোঁয়া বের হচ্ছে': 'ইঞ্জিনে তেল ঢুকে গেছে বা অতিরিক্ত তেল আছে।',
+      'ব্রেক কাজ করছে না': 'ব্রেক শু বা অয়েল চেক করুন।'
+    };
+
+    function sendMessage() {
+      const input = document.getElementById('userInput');
+      const text = input.value.trim();
+      if (!text) return;
+      appendMessage('user', text);
+      input.value = '';
+      let response = 'দুঃখিত ভাই, এই সমস্যার উত্তর আমার জানা নেই।';
+      for (let key in replies) {
+        if (text.includes(key)) {
+          response = replies[key];
+          break;
+        }
+      }
+      setTimeout(() => appendMessage('bot', response), 500);
+    }
+
+    function appendMessage(sender, text) {
+      const div = document.createElement('div');
+      div.className = 'message ' + sender;
+      div.textContent = text;
+      document.getElementById('messages').appendChild(div);
+    }
+  </script>
+</body>
+</html>
